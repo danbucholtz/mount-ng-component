@@ -5,6 +5,7 @@ import {
   ComponentFactoryResolver,
   ElementRef,
   Injector,
+  NgZone,
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
@@ -22,7 +23,7 @@ export class AppComponent implements AfterViewInit {
   @ViewChild('parent', { read: ElementRef }) parentElementRef: ElementRef;
   @ViewChild('parent', { read: ViewContainerRef}) viewport: ViewContainerRef;
 
-  constructor(private cfr: ComponentFactoryResolver, private injector: Injector, private cd: ChangeDetectorRef) {
+  constructor(private cfr: ComponentFactoryResolver, private injector: Injector, private cd: ChangeDetectorRef, private zone: NgZone) {
 
   }
 
@@ -39,8 +40,10 @@ export class AppComponent implements AfterViewInit {
   }
 
   mountWithoutViewContainer() {
-    const componentFactory = this.cfr.resolveComponentFactory(MyComponent);
-    const componentRef = componentFactory.create(this.injector, [], this.parentElementRef.nativeElement);
-    this.cd.detectChanges();
+    this.zone.run(() => {
+      const componentFactory = this.cfr.resolveComponentFactory(MyComponent);
+      const componentRef = componentFactory.create(this.injector, [], this.parentElementRef.nativeElement);
+      this.cd.detectChanges();
+    });
   }
 }
