@@ -1,27 +1,11 @@
-# TestApp
+## Mounting an Angular Component Sample
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.4.
+## Steps to run
+1. Run `npm install`
+2. Run `npm run start`
 
-## Development server
+## Questions
+Look at `src/app/app.component.ts`. Look at line 30 in the `ngAfterViewInit` method. When calling `mountFromViewContainer`, change detection and everything works as expected. I'm able to imperatively mount a component from it's constructor.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+If I comment out line 30 and uncomment line 31 so `mountWithoutViewContainer` is called. How am I able to mount the user's component (`MyComponent`) without a `ViewContainerRef`? I see that I can boostrap a component in the `componentFactory.create` method, but when I do that, I do not have a Host Element, and change detection does not work. We have several use cases in Ionic where we would not easily have access to the `ViewContainerRef` but would still like to mount the User's Angular component. Is this possible? What is the recommended approach for doing so.
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
